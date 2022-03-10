@@ -92,9 +92,19 @@ class User extends Authenticatable
         $this->attributes['document'] = $this->clearField($value);
     }
 
+    public function getDocumentAttribute($value)
+    {
+        return substr($value, '0', '3') . '.' . substr($value, '3', '3') . '.' . substr($value, '6', '3') . '-' . substr($value, '9', '2');
+    }
+
     public function setDateOfBirthAttribute($value)
     {
         $this->attributes['date_of_birth'] = $this->convertStringToDate($value);
+    }
+
+    public function getDateOfBirthAttribute($value)
+    {
+        return date('d/m/Y', strtotime($value));
     }
 
     public function setIncomeAttribute($value)
@@ -102,9 +112,19 @@ class User extends Authenticatable
         $this->attributes['income'] = floatval($this->convertStringToDouble($value));
     }
 
+    public function getIncomeAttribute($value)
+    {
+        return number_format($value, '2', ',', '.');
+    }
+
     public function setZipcodeAttribute($value)
     {
         $this->attributes['zipcode'] = $this->clearField($value);
+    }
+
+    public function getZipcodeAttribute($value)
+    {
+        return substr($value, '0', '5') . '-' . substr($value, '5', '3');
     }
 
     public function setTelephoneAttribute($value)
@@ -127,14 +147,39 @@ class User extends Authenticatable
         $this->attributes['spouse_document'] = $this->clearField($value);
     }
 
+    public function getSpouseDocumentAttribute($value)
+    {
+        return substr($value, '0', '3') . '.' . substr($value, '3', '3') . '.' . substr($value, '6', '3') . '-' . substr($value, '9', '2');
+    }
+
     public function setSpouseDateOfBirthAttribute($value)
     {
         $this->attributes['spouse_date_of_birth'] = $this->convertStringToDate($value);
     }
 
+    public function getSpouseDateOfBirthAttribute($value)
+    {
+        return date('d/m/Y', strtotime($value));
+    }
+
     public function setSpouseIncomeAttribute($value)
     {
         $this->attributes['spouse_income'] = floatval($this->convertStringToDouble($value));
+    }
+
+    public function getSpouseIncomeAttribute($value)
+    {
+        return number_format($value, '2', ',', '.');
+    }
+
+    public function setAdminAttribute($value)
+    {
+        $this->attributes['admin'] = ($value === true || $value === 'on' ? 1 : 0);
+    }
+
+    public function setClientAttribute($value)
+    {
+        $this->attributes['client'] = ($value === true || $value === 'on' ? 1 : 0);
     }
 
     private function convertStringToDouble(?string $param)

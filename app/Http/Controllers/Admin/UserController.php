@@ -16,7 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users = User::all();
+
+        return view('admin.users.index',[
+            'users' => $users
+        ]);
     }
 
     /**
@@ -47,11 +51,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user = new User();
-        $user->fill($request->all());
+        $userCreate = User::create($request->all());
 
-
-        var_dump($user->getAttributes());
+        var_dump($userCreate);
     }
 
     /**
@@ -73,7 +75,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+
+//        var_dump($user->document, $user->date_of_birth, $user->income, $user->zipcode, $user->getAttributes());
+
+        return view('admin.users.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -83,9 +91,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user->where('id', $id)->first();
+
+        $user->setLessorAttribute($request->lessor);
+        $user->setLesseeAttribute($request->lessee);
+
+        return redirect()->route('admin.users.index')->with(['mensagem' => 'Usuário alterado com sucesso!']);
+
+//        $user->fill($request->all());
+//
+//        $user->save();
+
+//        var_dump($request->all());
     }
 
     /**
