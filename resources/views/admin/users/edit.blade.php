@@ -52,6 +52,7 @@
                       enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="id" value="{{ $user->id }}">
 
                     <div class="nav_tabs_content">
                         <div id="data">
