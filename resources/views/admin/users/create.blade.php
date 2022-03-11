@@ -261,14 +261,14 @@
                                         <label class="label">
                                             <span class="legend">Residencial:</span>
                                             <input type="tel" name="telephone" class="mask-phone"
-                                                   placeholder="Número do Telefonce com DDD"
+                                                   placeholder="Número do Telefone com DDD"
                                                    value="{{ old('telephone') }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">*Celular:</span>
                                             <input type="tel" name="cell" class="mask-cell"
-                                                   placeholder="Número do Telefonce com DDD" value="{{ old('cell') }}"/>
+                                                   placeholder="Número do Telefone com DDD" value="{{ old('cell') }}"/>
                                         </label>
                                     </div>
                                 </div>

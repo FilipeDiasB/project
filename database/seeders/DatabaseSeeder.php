@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
                 'email' => 'filipe.dbitt@gmail.com',
                 'name' => 'Filipe Dias',
                 'password' => bcrypt('teste'),
+                'document' => '18737575732',
+                'spouse_name' => 'FabianyB',
+                'spouse_document' => '18737575733'
             ]
         ];
 

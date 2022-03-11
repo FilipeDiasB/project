@@ -49,7 +49,7 @@ class AlterUsersTable extends Migration
 
             // Spouse //
             $table->string('type_of_communion')->nullable();
-            $table->string('spouse_name')->nullable();
+            $table->string('spouse_name')->unique();
             $table->string('spouse_genre')->nullable();
             $table->string('spouse_document')->unique();
             $table->string('spouse_document_secondary', 20)->nullable();
