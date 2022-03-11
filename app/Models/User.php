@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -80,6 +81,11 @@ class User extends Authenticatable
     public function setLessorAttribute($value)
     {
         $this->attributes['lessor'] = ($value === true || $value === 'on' ? 1 : 0);
+    }
+
+    public function getUrlCoverAttribute()
+    {
+        return Storage::url($this->cover);
     }
 
     public function setLesseeAttribute($value)

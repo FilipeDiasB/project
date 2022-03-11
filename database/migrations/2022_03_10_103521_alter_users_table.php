@@ -41,6 +41,7 @@ class AlterUsersTable extends Migration
             $table->string('neighborhood')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
+            $table->string('cover')->nullable();
 
             // Contact //
             $table->string('telephone')->nullable();
@@ -88,6 +89,7 @@ class AlterUsersTable extends Migration
             $table->dropColumn('date_of_birth');
             $table->dropColumn('place_of_birth');
             $table->dropColumn('civil_status');
+            $table->dropColumn('cover');
 
             // Income //
             $table->dropColumn('occupation');

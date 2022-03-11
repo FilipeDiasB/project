@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User as UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -30,7 +31,10 @@ class UserController extends Controller
      */
     public function team()
     {
-        return view('admin.users.team');
+        $users = User::where('admin', 1)->get();
+        return view('admin.users.team', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -53,7 +57,10 @@ class UserController extends Controller
     {
         $userCreate = User::create($request->all());
 
-        var_dump($userCreate);
+        if (!empty($request->file('cover'))) {
+            $userCreate->cover = $request->file('cover')->store('user');
+            $userCreate->save();
+        }
     }
 
     /**
@@ -98,11 +105,24 @@ class UserController extends Controller
         $user->setLessorAttribute($request->lessor);
         $user->setLesseeAttribute($request->lessee);
 
+        if (!empty($request->file('cover'))) {
+            Storage::delete($user->cover);
+            $user->cover = '';
+        }
+
         $user->fill($request->all());
 
-        $user->save();
+        if (!empty($request->file('cover'))) {
+            $user->cover = $request->file('cover')->store('user');
+        }
 
-        return redirect()->route('admin.users.index')->with(['message' => 'Usuário alterado com sucesso!']);
+        if (!$user->save()) {
+            return redirect()->back()->withInput()->withErrors();
+        }
+
+        return redirect()->route('admin.users.edit', [
+            'user' => $user
+        ])->with(['message' => 'Usuário alterado com sucesso!']);
 
 //        var_dump($request->all());
     }

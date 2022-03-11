@@ -32,6 +32,12 @@
                     @endforeach
                 @endif
 
+                @if(session()->exists('message'))
+                    @component('admin.components.color-message', ['color' => 'green'])
+                        <p class="icon-asterisk">{{ session()->get('message') }}</p>
+                    @endcomponent
+                @endif
+
 
                 <ul class="nav_tabs">
                     <li class="nav_tabs_item">
@@ -148,7 +154,7 @@
                                         </optgroup>
                                         <optgroup label="Cônjuge não Obrigatório">
                                             <option
-                                                value="single" {{ (old('civil_status') == 'single' ? 'selected' : ($user->civil_status == 'married' ? 'single' : '')) }}>
+                                                value="single" {{ (old('civil_status') == 'single' ? 'selected' : ($user->civil_status == 'single' ? 'selected' : '')) }}>
                                                 Solteiro
                                             </option>
                                             <option
