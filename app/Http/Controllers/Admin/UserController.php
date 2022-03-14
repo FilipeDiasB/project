@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Company;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User as UserRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -64,7 +64,7 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.create', [
             'users' => $userCreate->id
-        ])->with(['color' => 'green', 'message' => 'Cliente cadastrado com sucesso!']);
+        ])->with(['message' => 'Usuário criado com sucesso!']);
 
     }
 
@@ -88,11 +88,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
+        $company = Company::where('id', $id)->first();
 
 //        var_dump($user->document, $user->date_of_birth, $user->income, $user->zipcode, $user->getAttributes());
 
         return view('admin.users.edit', [
-            'user' => $user
+            'user' => $user,
+            'company' => $company
         ]);
     }
 
@@ -126,7 +128,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.users.edit', [
-            'user' => $user
+            'user' => $user->id
         ])->with(['message' => 'Usuário alterado com sucesso!']);
 
 //        var_dump($request->all());

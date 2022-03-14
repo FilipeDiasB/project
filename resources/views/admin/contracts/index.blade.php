@@ -19,7 +19,7 @@
         </div>
     </header>
 
-    <?php include('filter.php'); ?>
+    <?php include('filter.blade.php'); ?>
 
     <div class="dash_content_app_box">
         <div class="dash_content_app_box_stage">

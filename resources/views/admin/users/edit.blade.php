@@ -446,8 +446,27 @@
                                 <div class="app_collapse_content">
 
                                     <div class="companies_list">
-                                        <div class="no-content mb-2">Não foram encontrados registros!</div>
+                                        @if($company)
+                                                <div class="companies_list_item mb-2">
+                                                    <p><b>Razão Social:</b> {{ $company->social_name }}</p>
+                                                    <p><b>Nome Fantasia:</b> {{ $company->alias_name }}</p>
+                                                    <p><b>CNPJ:</b> {{ $company->document_company }} - <b>Inscrição
+                                                            Estadual:</b>{{ $company->document_company_secondary }}</p>
+                                                    <p><b>Endereço:</b> {{ $company->street }}
+                                                        , {{ $company->number }} {{ $company->complement }}</p>
+                                                    <p><b>CEP:</b> {{ $company->zipcode }}
+                                                        <b>Bairro:</b> {{ $company->neighborhood }}
+                                                        <b>Cidade/Estado:</b>
+                                                        {{ $company->city }}/{{ $company->state }}</p>
+                                                </div>
+                                        @else
+                                            <div class="no-content mb-2">Não foram encontrados registros!</div>
+                                        @endif
                                     </div>
+                                    <p class="text-right">
+                                    <a href="{{ route('admin.companies.create', ['user' => $user->id]) }}"
+                                       class="btn btn-green icon-building-o">Cadastrar Nova Empresa</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>

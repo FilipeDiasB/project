@@ -35,9 +35,14 @@ class Company extends Model
         $this->attributes['document_company'] = $this->clearField($value);
     }
 
+    public function getDocumentCompanyAttribute($value)
+    {
+        return substr($value, '0', '2') . '.' . substr($value, '2', '3') . '.' . substr($value, '3', '3') . '/' . substr($value, '3', '4') . '-' . substr($value, '4', '2');
+    }
+
     private function clearField(?string $param)
     {
-        if (empty($param)){
+        if (empty($param)) {
             return '';
         }
 
