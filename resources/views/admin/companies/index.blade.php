@@ -39,13 +39,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><a href="" class="text-orange">UpInside Treinamentos LTDA</a></td>
-                        <td>UpInside Treinamentos</td>
-                        <td>12.345.678/0001-00</td>
-                        <td>123123</td>
-                        <td><a href="" class="text-orange">Robson V. Leite</a></td>
-                    </tr>
+                    @foreach($companies as $company)
+                        <tr>
+                            <td><a href="{{ route('admin.companies.edit', ['company' => $company->id]) }}"
+                                   class="text-orange">{{ $company->social_name }}</a></td>
+                            <td>{{ $company->alias_name }}</td>
+                            <td>{{ $company->document_company }}</td>
+                            <td>{{ $company->document_company_secondary }}</td>
+                            <td><a href="{{ route('admin.users.edit', ['user' => $company->user_id]) }}"
+                                   class="text-orange">{{ $company->user->name }}</a></td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

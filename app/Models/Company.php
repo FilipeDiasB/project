@@ -11,7 +11,7 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user',
+        'user_id',
         'social_name',
         'alias_name',
         'document_company',
@@ -24,6 +24,11 @@ class Company extends Model
         'state',
         'city'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function setDocumentCompanyAttribute($value)
     {

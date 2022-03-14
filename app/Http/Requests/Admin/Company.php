@@ -25,7 +25,7 @@ class Company extends FormRequest
     public function rules()
     {
         return [
-            'user' => 'required',
+            'user_id' => 'required',
             'social_name' => 'required|min:5|max:195',
             'alias_name' => 'required',
             'document_company' => 'required',

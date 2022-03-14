@@ -15,7 +15,6 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user');
             $table->string('social_name');
             $table->string('alias_name');
             $table->string('document_company');
@@ -33,7 +32,7 @@ class CreateCompaniesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 
