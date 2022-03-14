@@ -1,7 +1,4 @@
-<h3>My Project</h3>
+<h1>My Project</h1>
 
-<h2>
-Feito com:
-- Laravel Framework
-
-</h2>
+<h1>Feito com:</h1><br>
+<h2>- Laravel Framework</h2>
