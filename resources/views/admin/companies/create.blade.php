@@ -29,6 +29,12 @@
             @endforeach
         @endif
 
+        @if(session()->exists('message'))
+            @component('admin.components.color-message', ['color' => 'green'])
+                <p class="icon-asterisk">{{ session()->get('message') }}</p>
+            @endcomponent
+        @endif
+
         <div class="dash_content_app_box">
             <div class="dash_content_app_box_stage">
                 <form class="app_form" action="{{ route('admin.companies.store') }}" method="post">
@@ -46,10 +52,12 @@
                                 @endif
                             @endforeach
                         </select>
+                        @if(!empty($selected->id))
                         <p style="margin-top: 4px;">
                             <a href="" class="text-orange icon-link" style="font-size: .8em;" target="_blank">Acessar
                                 Cadastro</a>
                         </p>
+                        @endif
                     </label>
 
                     <label class="label">
@@ -130,7 +138,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button class="btn btn-large btn-green icon-check-square-o" type="submit">Criar Usuário</button>
+                        <button class="btn btn-large btn-green icon-check-square-o" type="submit">Criar empresa</button>
                     </div>
                 </form>
             </div>

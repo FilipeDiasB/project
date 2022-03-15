@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button class="btn btn-large btn-green icon-check-square-o" type="submit">Criar Usuário</button>
+                        <button class="btn btn-large btn-green icon-check-square-o" type="submit">Editar empresa</button>
                     </div>
                 </form>
             </div>

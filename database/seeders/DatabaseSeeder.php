@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\User;
 use Database\Factories\AdminFactory;
+use Database\Factories\UsuariosFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,22 +17,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         \App\Models\User::factory(1)->create();
+         \App\Models\Company::factory(1)->create();
 
-        $usuarios = [
-            [
-                'email' => 'filipe.dbitt@gmail.com',
-                'name' => 'Filipe Dias',
-                'password' => bcrypt('teste'),
-                'document' => '18737575732',
-                'spouse_name' => 'FabianyB',
-                'spouse_document' => '18737575733'
-            ]
-        ];
-
-        foreach ($usuarios as $usuario) {
-            User::insert($usuario);
-        }
+//        $usuarios = [
+//            [
+//                'email' => 'filipe.dbitt@gmail.com',
+//                'name' => 'Filipe Dias',
+//                'password' => bcrypt('teste'),
+//                'document' => '18737575732',
+//                'spouse_name' => 'FabianyB',
+//                'spouse_document' => '18737575733'
+//            ]
+//        ];
+//
+//        foreach ($usuarios as $usuario) {
+//            User::insert($usuario);
+//        }
 
     }
 }

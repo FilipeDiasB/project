@@ -42,7 +42,6 @@ mix
         'resources/views/admin/assets/js/select2/js/i18n/pt-BR.js',
         'resources/views/admin/assets/js/jquery.form.js',
         'resources/views/admin/assets/js/jquery.mask.js',
-        'resources/views/admin/assets/js/tinymce/tinymce.min.js'
     ], 'public/backend/assets/js/libs.js')
 
     .copyDirectory('resources/views/admin/assets/js/datatables', 'public/backend/assets/css/js/datatables')
