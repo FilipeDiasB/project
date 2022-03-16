@@ -447,25 +447,25 @@
 
                                     <div class="companies_list">
                                         @if($company)
-                                                <div class="companies_list_item mb-2">
-                                                    <p><b>Razão Social:</b> {{ $company->social_name }}</p>
-                                                    <p><b>Nome Fantasia:</b> {{ $company->alias_name }}</p>
-                                                    <p><b>CNPJ:</b> {{ $company->document_company }} - <b>Inscrição
-                                                            Estadual:</b>{{ $company->document_company_secondary }}</p>
-                                                    <p><b>Endereço:</b> {{ $company->street }}
-                                                        , {{ $company->number }} {{ $company->complement }}</p>
-                                                    <p><b>CEP:</b> {{ $company->zipcode }}
-                                                        <b>Bairro:</b> {{ $company->neighborhood }}
-                                                        <b>Cidade/Estado:</b>
-                                                        {{ $company->city }}/{{ $company->state }}</p>
-                                                </div>
+                                            <div class="companies_list_item mb-2">
+                                                <p><b>Razão Social:</b> {{ $company->social_name }}</p>
+                                                <p><b>Nome Fantasia:</b> {{ $company->alias_name }}</p>
+                                                <p><b>CNPJ:</b> {{ $company->document_company }} - <b>Inscrição
+                                                        Estadual:</b>{{ $company->document_company_secondary }}</p>
+                                                <p><b>Endereço:</b> {{ $company->street }}
+                                                    , {{ $company->number }} {{ $company->complement }}</p>
+                                                <p><b>CEP:</b> {{ $company->zipcode }}
+                                                    <b>Bairro:</b> {{ $company->neighborhood }}
+                                                    <b>Cidade/Estado:</b>
+                                                    {{ $company->city }}/{{ $company->state }}</p>
+                                            </div>
                                         @else
                                             <div class="no-content mb-2">Não foram encontrados registros!</div>
                                         @endif
                                     </div>
                                     <p class="text-right">
-                                    <a href="{{ route('admin.companies.create', ['user' => $user->id]) }}"
-                                       class="btn btn-green icon-building-o">Cadastrar Nova Empresa</a>
+                                        <a href="{{ route('admin.companies.create', ['user' => $user->id]) }}"
+                                           class="btn btn-green icon-building-o">Cadastrar Nova Empresa</a>
                                     </p>
                                 </div>
                             </div>
@@ -480,49 +480,128 @@
 
                                 <div class="app_collapse_content">
                                     <div id="realties">
+                                        <div class="realty_list">
+                                            @if($user->properties)
+                                                @foreach($user->properties as $property)
+                                                    <div class="realty_list_item mb-1">
+                                                        <div class="realty_list_item_actions_stats">
+                                                            <img src="{{ $property->cover() }}" alt="">
+                                                            <ul>
+                                                                @if($property->sale == true && !empty($property->sale_price))
+                                                                    <li>Venda: R$ {{ $property->sale_price }}</li>
+                                                                @endif
+
+                                                                @if($property->rent == true && !empty($property->rent_price))
+                                                                    <li>Aluguel: R$ {{ $property->rent_price }}</li>
+                                                                @endif
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="realty_list_item_content">
+                                                            <h4>#{{ $property->id }} {{ $property->category }}
+                                                                - {{ $property->type }}</h4>
+
+                                                            <div class="realty_list_item_card">
+                                                                <div class="realty_list_item_card_image">
+                                                                    <span class="icon-realty-location"></span>
+                                                                </div>
+                                                                <div class="realty_list_item_card_content">
+                                                                    <span class="realty_list_item_description_title">Bairro:</span>
+                                                                    <span
+                                                                        class="realty_list_item_description_content">{{ $property->neighborhood }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="realty_list_item_card">
+                                                                <div class="realty_list_item_card_image">
+                                                                    <span class="icon-realty-util-area"></span>
+                                                                </div>
+                                                                <div class="realty_list_item_card_content">
+                                                                    <span class="realty_list_item_description_title">Área Útil:</span>
+                                                                    <span class="realty_list_item_description_content">{{ $property->area_util }}m&sup2;</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="realty_list_item_card">
+                                                                <div class="realty_list_item_card_image">
+                                                                    <span class="icon-realty-bed"></span>
+                                                                </div>
+                                                                <div class="realty_list_item_card_content">
+                                                                    <span class="realty_list_item_description_title">Domitórios:</span>
+                                                                    <span class="realty_list_item_description_content">{{ $property->bedrooms + $property->suites }} Quartos<br><span>Sendo {{ $property->suites }} suítes</span></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="realty_list_item_card">
+                                                                <div class="realty_list_item_card_image">
+                                                                    <span class="icon-realty-garage"></span>
+                                                                </div>
+                                                                <div class="realty_list_item_card_content">
+                                                                    <span class="realty_list_item_description_title">Garagem:</span>
+                                                                    <span class="realty_list_item_description_content">{{ $property->garage + $property->garage_covered }} Vagas<br><span>Sendo {{ $property->garage_covered }} cobertas</span></span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="realty_list_item_actions">
+                                                            <ul>
+                                                                <li class="icon-eye">1234 Visualizações</li>
+                                                            </ul>
+                                                            <div>
+                                                                <a href="" class="btn btn-blue icon-eye">Visualizar
+                                                                    Imóvel</a>
+                                                                <a href="{{ route('admin.properties.edit', ['property' => $property->id]) }}"
+                                                                   class="btn btn-green icon-pencil-square-o">Editar
+                                                                    Imóvel</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="no-content">Não foram encontrados registros!</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="app_collapse mt-3">
+                                <div class="app_collapse_header collapse">
+                                    <h3>Locatário</h3>
+                                    <span class="icon-minus-circle icon-notext"></span>
+                                </div>
+
+                                <div class="app_collapse_content">
+                                    <div id="realties">
                                         <div class="no-content">Não foram encontrados registros!</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="app_collapse mt-3">
-                            <div class="app_collapse_header collapse">
-                                <h3>Locatário</h3>
-                                <span class="icon-minus-circle icon-notext"></span>
-                            </div>
+                        <div id="management" class="d-none">
+                            <div class="label_gc">
+                                <span class="legend">Conceder:</span>
+                                <label class="label">
+                                    <input type="checkbox"
+                                           name="admin" {{ (old('admin') == 'on' || old('admin') == true ? 'checked' : ($user->admin == true ? 'checked' : '')) }}><span>Administrativo</span>
+                                </label>
 
-                            <div class="app_collapse_content">
-                                <div id="realties">
-                                    <div class="no-content">Não foram encontrados registros!</div>
-                                </div>
+                                <label class="label">
+                                    <input type="checkbox"
+                                           name="client" {{ (old('client') == 'on' || old('client') == true ? 'checked' : ($user->client == true ? 'checked' : '')) }}><span>Cliente</span>
+                                </label>
                             </div>
                         </div>
                     </div>
 
-                    <div id="management" class="d-none">
-                        <div class="label_gc">
-                            <span class="legend">Conceder:</span>
-                            <label class="label">
-                                <input type="checkbox"
-                                       name="admin" {{ (old('admin') == 'on' || old('admin') == true ? 'checked' : ($user->admin == true ? 'checked' : '')) }}><span>Administrativo</span>
-                            </label>
-
-                            <label class="label">
-                                <input type="checkbox"
-                                       name="client" {{ (old('client') == 'on' || old('client') == true ? 'checked' : ($user->client == true ? 'checked' : '')) }}><span>Cliente</span>
-                            </label>
-                        </div>
+                    <div class="text-right mt-2">
+                        <button class="btn btn-large btn-green icon-check-square-o" type="submit">Salvar
+                            Alterações
+                        </button>
                     </div>
+                </form>
             </div>
-
-            <div class="text-right mt-2">
-                <button class="btn btn-large btn-green icon-check-square-o" type="submit">Salvar
-                    Alterações
-                </button>
-            </div>
-            </form>
-        </div>
         </div>
     </section>
 

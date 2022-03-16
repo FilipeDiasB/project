@@ -25,72 +25,80 @@
         <div class="dash_content_app_box">
             <div class="dash_content_app_box_stage">
                 <div class="realty_list">
-                    <div class="realty_list_item mt-1 mb-1">
-                        <div class="realty_list_item_actions_stats">
-                            <img src="assets/images/realty.jpeg" alt="">
-                            <ul>
-                                <li>Venda: R$ 1.000,00</li>
-                                <li>Aluguel: R$ 1.000,00</li>
-                            </ul>
-                        </div>
-
-                        <div class="realty_list_item_content">
-                            <h4>#1 Casa Residencial - Campeche</h4>
-
-                            <div class="realty_list_item_card">
-                                <div class="realty_list_item_card_image">
-                                    <span class="icon-realty-location"></span>
+                    @if(!empty($properties))
+                        @foreach($properties as $property)
+                            <div class="realty_list_item mb-2">
+                                <div class="realty_list_item_actions_stats">
+                                    <img src="{{ $property->cover() }}" alt="">
+                                    <ul>
+                                        <li>Venda: R$ {{ $property->sale_price }}</li>
+                                        <li>Aluguel: R$ {{ $property->rent_price }}</li>
+                                    </ul>
                                 </div>
-                                <div class="realty_list_item_card_content">
-                                    <span class="realty_list_item_description_title">Bairro:</span>
-                                    <span class="realty_list_item_description_content">Campeche</span>
+
+                                <div class="realty_list_item_content">
+                                    <h4>Imóvel listado por: {{ $property->user->name }} | {{ $property->category }} - {{ $property->type }}</h4>
+
+                                    <div class="realty_list_item_card">
+                                        <div class="realty_list_item_card_image">
+                                            <span class="icon-realty-location"></span>
+                                        </div>
+                                        <div class="realty_list_item_card_content">
+                                            <span class="realty_list_item_description_title">Bairro:</span>
+                                            <span
+                                                class="realty_list_item_description_content"> {{ $property->neighborhood }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="realty_list_item_card">
+                                        <div class="realty_list_item_card_image">
+                                            <span class="icon-realty-util-area"></span>
+                                        </div>
+                                        <div class="realty_list_item_card_content">
+                                            <span class="realty_list_item_description_title">Área Útil:</span>
+                                            <span class="realty_list_item_description_content">{{ $property->area_util }} m2;</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="realty_list_item_card">
+                                        <div class="realty_list_item_card_image">
+                                            <span class="icon-realty-bed"></span>
+                                        </div>
+                                        <div class="realty_list_item_card_content">
+                                            <span class="realty_list_item_description_title">Domitórios:</span>
+                                            <span
+                                                class="realty_list_item_description_content">{{ $property->bedrooms }} Quartos<br><span>Sendo {{ $property->suites }} suítes</span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="realty_list_item_card">
+                                        <div class="realty_list_item_card_image">
+                                            <span class="icon-realty-garage"></span>
+                                        </div>
+                                        <div class="realty_list_item_card_content">
+                                            <span class="realty_list_item_description_title">Garagem:</span>
+                                            <span
+                                                class="realty_list_item_description_content">{{ $property->garage + $property->garage_covered }} Vagas<br><span>Sendo {{ $property->garages_covered }} cobertas</span></span>
+                                        </div>
+                                    </div>
+
                                 </div>
+                                <div class="realty_list_item_actions">
+                                    <ul>
+                                        <li class="icon-eye">1234 Visualizações</li>
+                                    </ul>
+                                    <div>
+                                        <a href="{{ route('admin.properties.index') }}" class="btn btn-blue icon-eye">Visualizar
+                                            Imóvel</a>
+                                        <a href="{{ route('admin.properties.edit', ['property' => $property->id]) }}"
+                                           class="btn btn-green icon-pencil-square-o">Editar Imóvel</a>
+                                    </div>
+                                </div>
+                                @endforeach
+                                @else
+                                    <div class="no-content">Não foram encontrados registros!</div>
+                                @endif
                             </div>
-
-                            <div class="realty_list_item_card">
-                                <div class="realty_list_item_card_image">
-                                    <span class="icon-realty-util-area"></span>
-                                </div>
-                                <div class="realty_list_item_card_content">
-                                    <span class="realty_list_item_description_title">Área Útil:</span>
-                                    <span class="realty_list_item_description_content">300 m&sup2;</span>
-                                </div>
-                            </div>
-
-                            <div class="realty_list_item_card">
-                                <div class="realty_list_item_card_image">
-                                    <span class="icon-realty-bed"></span>
-                                </div>
-                                <div class="realty_list_item_card_content">
-                                    <span class="realty_list_item_description_title">Domitórios:</span>
-                                    <span
-                                        class="realty_list_item_description_content">2 Quartos<br><span>Sendo 1 suítes</span></span>
-                                </div>
-                            </div>
-
-                            <div class="realty_list_item_card">
-                                <div class="realty_list_item_card_image">
-                                    <span class="icon-realty-garage"></span>
-                                </div>
-                                <div class="realty_list_item_card_content">
-                                    <span class="realty_list_item_description_title">Garagem:</span>
-                                    <span
-                                        class="realty_list_item_description_content">2 Vagas<br><span>Sendo 1 cobertas</span></span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="realty_list_item_actions">
-                            <ul>
-                                <li class="icon-eye">1234 Visualizações</li>
-                            </ul>
-                            <div>
-                                <a href="" class="btn btn-blue icon-eye">Visualizar Imóvel</a>
-                                <a href="" class="btn btn-green icon-pencil-square-o">Editar Imóvel</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

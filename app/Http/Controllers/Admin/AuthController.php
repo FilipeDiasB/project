@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -18,9 +19,15 @@ class AuthController extends Controller
         return view('admin.index');
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        return view('admin.dashboard');
+        $properties = Property::orderby('id', 'DESC')->limit(3)->get();
+        $users = User::orderBy('name')->get();
+
+        return view('admin.dashboard', [
+            'properties' => $properties,
+            'users' => $users,
+        ]);
     }
 
     public function login(Request $request)

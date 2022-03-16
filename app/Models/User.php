@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany(Company::class);
     }
 
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
+
     public function setLessorAttribute($value)
     {
         $this->attributes['lessor'] = ($value === true || $value === 'on' ? 1 : 0);

@@ -10,18 +10,21 @@
 
             <div class="dash_content_app_box">
                 <section class="app_dash_home_stats">
+
+                    @foreach($users as $user)
                     <article class="control radius">
                         <h4 class="icon-users">Clientes</h4>
-                        <p><b>Locadores:</b> 100</p>
-                        <p><b>Locatários:</b> 100</p>
+                        <p><b>Locadores:</b>{{ ($user->lessor == true | $user->lessor == 'on' ? $user->id : '') }}</p>
+                        <p><b>Locatários:</b>{{ ($user->lessee == true | $user->lessee == 'on' ? $user->id : '') }}</p>
                         <p><b>Time:</b> 3</p>
                     </article>
+                    @endforeach
 
                     <article class="blog radius">
                         <h4 class="icon-home">Imóveis</h4>
-                        <p><b>Disponíveis:</b> 100</p>
-                        <p><b>Locados:</b> 100</p>
-                        <p><b>Total:</b> 200</p>
+                        <p><b>Disponíveis:</b> 4</p>
+                        <p><b>Locados:</b> 0</p>
+                        <p><b>Total:</b> 4</p>
                     </article>
 
                     <article class="users radius">
@@ -69,19 +72,20 @@
             </header>
 
             <div class="dash_content_app_box">
+                @foreach($properties as $property)
                 <div class="dash_content_app_box_stage">
                     <div class="realty_list">
                         <div class="realty_list_item mt-1 mb-1">
                             <div class="realty_list_item_actions_stats">
-                                <img src="{{ url(asset('backend/assets/images/realty.jpeg'))}}" alt="">
+                                <img src="{{ $property->cover() }}" alt="">
                                 <ul>
-                                    <li>Venda: R$ 1.000,00</li>
-                                    <li>Aluguel: R$ 1.000,00</li>
+                                    <li>Venda: {{ $property->sale_price }}</li>
+                                    <li>Aluguel: {{ $property->rent_price }}</li>
                                 </ul>
                             </div>
 
                             <div class="realty_list_item_content">
-                                <h4>#1 Casa Residencial - Campeche</h4>
+                                <h4>#{{ $property->id }} {{ $property->category }} - {{ $property->type }}</h4>
 
                                 <div class="realty_list_item_card">
                                     <div class="realty_list_item_card_image">
@@ -89,7 +93,7 @@
                                     </div>
                                     <div class="realty_list_item_card_content">
                                         <span class="realty_list_item_description_title">Bairro:</span>
-                                        <span class="realty_list_item_description_content">Campeche</span>
+                                        <span class="realty_list_item_description_content">{{ $property->neighborhood }}</span>
                                     </div>
                                 </div>
 
@@ -99,7 +103,7 @@
                                     </div>
                                     <div class="realty_list_item_card_content">
                                         <span class="realty_list_item_description_title">Área Útil:</span>
-                                        <span class="realty_list_item_description_content">300 m&sup2;</span>
+                                        <span class="realty_list_item_description_content">{{ $property->area_util }} m2;</span>
                                     </div>
                                 </div>
 
@@ -109,7 +113,7 @@
                                     </div>
                                     <div class="realty_list_item_card_content">
                                         <span class="realty_list_item_description_title">Domitórios:</span>
-                                        <span class="realty_list_item_description_content">2 Quartos<br><span>Sendo 1 suítes</span></span>
+                                        <span class="realty_list_item_description_content">{{ $property->bedrooms }} Quartos<br><span>Sendo {{ $property->suites }} suítes</span></span>
                                     </div>
                                 </div>
 
@@ -119,7 +123,7 @@
                                     </div>
                                     <div class="realty_list_item_card_content">
                                         <span class="realty_list_item_description_title">Garagem:</span>
-                                        <span class="realty_list_item_description_content">2 Vagas<br><span>Sendo 1 cobertas</span></span>
+                                        <span class="realty_list_item_description_content">{{ $property->garage + $property->garage_covered }} Vagas<br><span>Sendo {{ $property->garage_covered }} cobertas</span></span>
                                     </div>
                                 </div>
 
@@ -137,6 +141,7 @@
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </section>
     </div>

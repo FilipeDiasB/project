@@ -18,22 +18,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          \App\Models\User::factory(1)->create();
-         \App\Models\Company::factory(1)->create();
+        \App\Models\Company::factory(1)->create();
 
-//        $usuarios = [
-//            [
-//                'email' => 'filipe.dbitt@gmail.com',
-//                'name' => 'Filipe Dias',
-//                'password' => bcrypt('teste'),
-//                'document' => '18737575732',
-//                'spouse_name' => 'FabianyB',
-//                'spouse_document' => '18737575733'
-//            ]
-//        ];
-//
-//        foreach ($usuarios as $usuario) {
-//            User::insert($usuario);
-//        }
+        $usuarios = [
+            [
+                'email' => 'filipe.dbitt@gmail.com',
+                'name' => 'Filipe Dias',
+                'password' => bcrypt('teste'),
+                'document' => '18737575732',
+                'spouse_name' => 'FabianyB',
+                'spouse_document' => '18737575733'
+            ]
+        ];
+
+        foreach ($usuarios as $usuario) {
+            User::insert($usuario);
+        }
 
     }
 }
