@@ -150,8 +150,6 @@ class Property extends Model
     {
         return number_format($value, '2', ',', '.');
     }
-
-
     /**
      * Mutator Air Conditioning
      *

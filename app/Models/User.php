@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\BrazilDocuments;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -88,14 +89,24 @@ class User extends Authenticatable
         return $this->hasMany(Property::class);
     }
 
-    public function setLessorAttribute($value)
-    {
-        $this->attributes['lessor'] = ($value === true || $value === 'on' ? 1 : 0);
-    }
-
     public function getUrlCoverAttribute()
     {
         return Storage::url($this->cover);
+    }
+
+    public function scopeLessors($query)
+    {
+        return $query->where('lessor', true);
+    }
+
+    public function scopeLessees($query)
+    {
+        return $query->where('lessee', true);
+    }
+
+    public function setLessorAttribute($value)
+    {
+        $this->attributes['lessor'] = ($value === true || $value === 'on' ? 1 : 0);
     }
 
     public function setLesseeAttribute($value)

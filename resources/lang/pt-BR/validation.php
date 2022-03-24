@@ -221,7 +221,7 @@ return [
         'document_company' => 'CNPJ',
         'document_company_secondary' => 'inscrição estadual',
 
-        // Contracts
+        // Contract
         'owner' => 'proprietário',
         'acquirer' => 'adquirente',
         'property' => 'imóvel',

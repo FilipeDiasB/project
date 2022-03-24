@@ -10,7 +10,7 @@
             <div class="dash_content_app_header_actions">
                 <nav class="dash_content_app_breadcrumb">
                     <ul>
-                        <li><a href="{{ route('admin.home') }}">Dashboard</a></li>
+                        <li><a href="{{ route('admin.users.index') }}">Dashboard</a></li>
                         <li class="separator icon-angle-right icon-notext"></li>
                         <li><a href="{{ route('admin.contracts.index') }}">Contratos</a></li>
                         <li class="separator icon-angle-right icon-notext"></li>
@@ -28,21 +28,6 @@
         <div class="dash_content_app_box">
 
             <div class="nav">
-
-                @if($errors->all())
-                    @foreach($errors->all() as $error)
-                        @component('admin.components.color-message', ['color' => 'orange'])
-                            <p class="icon-asterisk">{{ $error }}</p>
-                        @endcomponent
-                    @endforeach
-                @endif
-
-                    @if(session()->exists('message'))
-                        @component('admin.components.color-message', ['color' => 'green'])
-                            <p class="icon-asterisk">{{ session()->get('message') }}</p>
-                        @endcomponent
-                    @endif
-
                 <ul class="nav_tabs">
                     <li class="nav_tabs_item">
                         <a href="#parts" class="nav_tabs_item_link active">Das Partes</a>
@@ -54,14 +39,8 @@
 
                 <div class="nav_tabs_content">
                     <div id="parts">
-                        <form action="{{ route('admin.contracts.store') }}" method="post" class="app_form">
+                        <form action="{{ route('admin.contracts.create') }}" method="post" class="app_form">
                             @csrf
-
-                            <input type="hidden" name="owner_spouse_persist" value="{{ old('owner_spouse') }}">
-                            <input type="hidden" name="owner_company_persist" value="{{ old('owner_company') }}">
-                            <input type="hidden" name="acquirer_spouse_persist" value="{{ old('acquirer_spouse') }}">
-                            <input type="hidden" name="acquirer_company_persist" value="{{ old('acquirer_company') }}">
-                            <input type="hidden" name="property_persist" value="{{ old('property_id') }}">
 
                             <div class="label_gc">
                                 <span class="legend">Finalidade:</span>
@@ -190,7 +169,7 @@
                                             <span class="legend">Valor de Locação:</span>
                                             <input type="text" name="rent_price" class="mask-money"
                                                    placeholder="Valor de Locação"
-                                                   disabled {{ (old('rent') != 'on' ? 'disable' : '') }}/>
+                                                   disabled {{ (old('sale') != 'on' ? 'disable' : '') }}/>
                                         </label>
                                     </div>
 
@@ -221,10 +200,10 @@
                                         <label class="label">
                                             <span class="legend">Prazo do Contrato (Em meses)</span>
                                             <select name="deadline" class="select2">
-                                                <option value="{{ old('deadline') == 12 ? 'selected' : ''}}">12 meses</option>
-                                                <option value="{{ old('deadline') == 24 ? 'selected' : ''}}">24 meses</option>
-                                                <option value="{{ old('deadline') == 36 ? 'selected' : ''}}">36 meses</option>
-                                                <option value="{{ old('deadline') == 48 ? 'selected' : ''}}">48 meses</option>
+                                                <option value="12">12 meses</option>
+                                                <option value="24">24 meses</option>
+                                                <option value="36">36 meses</option>
+                                                <option value="48">48 meses</option>
                                             </select>
                                         </label>
                                     </div>
@@ -232,7 +211,7 @@
                                     <label class="label">
                                         <span class="legend">Data de Início:</span>
                                         <input type="tel" name="start_at" class="mask-date" placeholder="Data de Início"
-                                               value="{{ old('start_at') }}"/>
+                                               value="{{ date('Y/m/d') }}"/>
                                     </label>
                                 </div>
                             </div>
@@ -254,6 +233,8 @@
     </section>
 
 @endsection
+
+
 @section('js')
     <script>
 
@@ -424,12 +405,12 @@
                 }, 'json');
             });
 
-            if ($('input[name="property_persist"]').val() > 0) {
-                let property_id = $('select[name="property_id"]');
-                $.post(property_id.data('action'), {property: $('input[name="property_persist"]').val()}, function (response) {
-                    setFieldProperty(response);
-                }, 'json');
-            }
+            // if ($('input[name="property_persist"]').val() > 0) {
+            //     let property = $('select[name="property"]');
+            //     $.post(property.data('action'), {property: $('input[name="property_persist"]').val()}, function (response) {
+            //         setFieldProperty(response);
+            //     }, 'json');
+            // }
         });
     </script>
 @endsection

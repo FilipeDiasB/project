@@ -19,10 +19,10 @@ class CreateContractsTable extends Migration
             $table->boolean('rent');
             $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
             $table->boolean('owner_spouse')->nullable();
-            $table->foreignId('owner_company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('owner_company_id')->nullable()->constrained('companies')->onDelete('cascade');
             $table->foreignId('acquirer_id')->constrained('users')->onDelete('cascade');
             $table->boolean('acquirer_spouse')->nullable();
-            $table->foreignId('acquirer_company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('acquirer_company_id')->nullable()->constrained('companies')->onDelete('cascade');
             $table->foreignId('property_id')->constrained('properties')->onDelete('cascade');
             $table->double('price');
             $table->double('tribute');
