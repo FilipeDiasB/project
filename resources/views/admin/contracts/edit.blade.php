@@ -39,8 +39,11 @@
 
                 <div class="nav_tabs_content">
                     <div id="parts">
-                        <form action="{{ route('admin.contracts.create') }}" method="post" class="app_form">
+                        <form action="{{ route('admin.contracts.update', ['contract' => $contract->id]) }}" method="post" class="app_form">
                             @csrf
+                            @method('PUT')
+
+
 
                             <div class="label_gc">
                                 <span class="legend">Finalidade:</span>

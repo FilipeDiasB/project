@@ -37,11 +37,11 @@
                     @endforeach
                 @endif
 
-                    @if(session()->exists('message'))
-                        @component('admin.components.color-message', ['color' => 'green'])
-                            <p class="icon-asterisk">{{ session()->get('message') }}</p>
-                        @endcomponent
-                    @endif
+                @if(session()->exists('message'))
+                    @component('admin.components.color-message', ['color' => 'green'])
+                        <p class="icon-asterisk">{{ session()->get('message') }}</p>
+                    @endcomponent
+                @endif
 
                 <ul class="nav_tabs">
                     <li class="nav_tabs_item">
@@ -81,7 +81,8 @@
                                     </option>
                                     <option value="active" {{ old('status' === 'active' ? 'select' : '') }}>Ativo
                                     </option>
-                                    <option value="canceled" {{ old('status' === 'canceled' ? 'select' : '') }}>Cancelado
+                                    <option value="canceled" {{ old('status' === 'canceled' ? 'select' : '') }}>
+                                        Cancelado
                                     </option>
                                 </select>
                             </label>
@@ -100,7 +101,7 @@
                                                     data-action="{{ route('admin.contracts.getDataOwner') }}">
                                                 <option value="0">Informe um Cliente</option>
                                                 @foreach($lessors->get() as $lessor)
-                                                    <option value="{{ $lessor->id }}">{{ $lessor->name }}
+                                                    <option value="{{ $lessor->id }}" {{ (old('owner_id') == $lessor->id ? 'selected' : '') }}>{{ $lessor->name }}
                                                         ({{ $lessor->document }})
                                                     </option>
 
@@ -139,7 +140,7 @@
                                                     data-action="{{ route('admin.contracts.getDataOwner') }}">
                                                 <option value="0">Informe um Cliente</option>
                                                 @foreach($lessees->get() as $lessee)
-                                                    <option value="{{ $lessee->id }}">{{ $lessee->name }}
+                                                    <option value="{{ $lessee->id }}" {{ (old('acquirer_id') == $lessee->id ? 'selected' : '') }}>{{ $lessee->name }}
                                                         ({{ $lessee->document }})
                                                     </option>
                                                 @endforeach
@@ -221,10 +222,14 @@
                                         <label class="label">
                                             <span class="legend">Prazo do Contrato (Em meses)</span>
                                             <select name="deadline" class="select2">
-                                                <option value="{{ old('deadline') == 12 ? 'selected' : ''}}">12 meses</option>
-                                                <option value="{{ old('deadline') == 24 ? 'selected' : ''}}">24 meses</option>
-                                                <option value="{{ old('deadline') == 36 ? 'selected' : ''}}">36 meses</option>
-                                                <option value="{{ old('deadline') == 48 ? 'selected' : ''}}">48 meses</option>
+                                                <option value="12" {{ old('deadline') == 12 ? 'selected' : ''}}">12 meses
+                                                </option>
+                                                <option value="24" {{ old('deadline') == 24 ? 'selected' : ''}}">24 meses
+                                                </option>
+                                                <option value="36" {{ old('deadline') == 36 ? 'selected' : ''}}">36 meses
+                                                </option>
+                                                <option value="48" {{ old('deadline') == 48 ? 'selected' : ''}}">48 meses
+                                                </option>
                                             </select>
                                         </label>
                                     </div>

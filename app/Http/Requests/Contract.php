@@ -26,11 +26,11 @@ class Contract extends FormRequest
     {
         return [
             'rent' => 'different:sale',
-            'owner' => 'required',
-            'acquirer' => 'required|different:owner',
+            'owner_id' => 'required',
+            'acquirer_id' => 'required|different:owner',
             'sale_price' => 'required_if:sale,on',
             'rent_price' => 'required_if:rent,on',
-            'property' => 'required|integer',
+            'property_id' => 'required|integer',
             'due_date' => 'required|integer|min:1|max:28',
             'deadline' => 'required|integer|min:12|max:48',
             'start_at' => 'required',
