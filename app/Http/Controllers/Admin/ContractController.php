@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Company;
 use App\Models\Contract;
 use App\Models\Property;
-use Illuminate\Http\Request as ContractRequest;
+use App\Http\Requests\Contract as ContractRequest;
 use App\Models\User;
 
 class ContractController extends Controller
@@ -45,11 +45,12 @@ class ContractController extends Controller
      */
     public function store(ContractRequest $request)
     {
-        $contract = new Contract();
-        $contract->fill($request->all());
+//        $contract = new Contract();
+//        $contract->fill($request->all());
+//
+//        dd($contract->getAttributes());
 
-        dd($contract->getAttributes());
-//        $contract = Contract::create($request->all());
+        $contract = Contract::create($request->all());
 
         return redirect()->route('admin.contracts.edit', [
             'contract' => $contract->id
@@ -77,7 +78,12 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $contract = Contract::where('id', $id)->first();
+        $lessors = User::lessors();
+        $lessees = User::lessees();
+
+        return view('admin.contracts.edit', compact('contract', 'lessors', 'lessees'));
     }
 
     /**
@@ -103,7 +109,7 @@ class ContractController extends Controller
         //
     }
 
-    public function getDataOwner(ContractRequest $request)
+    public function getDataOwner(Request $request)
     {
         $lessor = User::where('id', $request->user)->first([
             'id',
@@ -156,7 +162,7 @@ class ContractController extends Controller
         return response()->json($json);
     }
 
-    public function getDataAcquirer(ContractRequest $request)
+    public function getDataAcquirer(Request $request)
     {
         $lessee = User::where('id', $request->user)->first([
             'id',
@@ -196,7 +202,7 @@ class ContractController extends Controller
         return response()->json($json);
     }
 
-    public function getDataProperties(ContractRequest $request)
+    public function getDataProperties(Request $request)
     {
         $property = Property::where('id', $request->property)->first();
 

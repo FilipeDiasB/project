@@ -10,9 +10,7 @@ use App\Models\User;
 use App\Support\Cropper;
 use Illuminate\Http\Request;
 use App\Http\Requests\Property as PropertyRequest;
-use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Storage;
-use function GuzzleHttp\Promise\all;
 
 class PropertyController extends Controller
 {
