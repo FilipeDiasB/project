@@ -36,4 +36,13 @@ class Contract extends FormRequest
             'start_at' => 'required',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'sale_price.required_if' => 'O valor de venda do imóvel é obrigatório quando o selecionar a finalidade "venda".',
+            'rent_price.required_if' => 'O valor de locação do imóvel é obrigatório quando o selecionar a finalidade "locação".',
+            'rent.different' => 'Só é possivel selecionar uma finalidade para o imóvel.'
+        ];
+    }
 }

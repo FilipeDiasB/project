@@ -8,6 +8,7 @@ use App\Models\Contract;
 use App\Models\Property;
 use App\Http\Requests\Contract as ContractRequest;
 use App\Models\User;
+use mysql_xdevapi\Exception;
 
 class ContractController extends Controller
 {
@@ -18,7 +19,9 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return view('admin.contracts.index');
+        $contracts = Contract::with(['ownerIdObject', 'acquirerIdObject'])->orderBy('id', 'DESC')->get();
+
+        return view('admin.contracts.index', compact('contracts'));
     }
 
     /**
@@ -78,7 +81,6 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-
         $contract = Contract::where('id', $id)->first();
         $lessors = User::lessors();
         $lessees = User::lessees();
@@ -95,7 +97,25 @@ class ContractController extends Controller
      */
     public function update(ContractRequest $request, $id)
     {
-        //
+        $contract = Contract::where('id', $id)->first();
+        $contract->fill($request->all());
+        $contract->save();
+
+        if ($request->property_id) {
+            $property = Property::where('id', $request->property_id)->first();
+
+            if ($request->status === 'active') {
+                $property->status = 0;
+                $property->save();
+            } else {
+                $property->status = 1;
+                $property->save();
+            }
+        }
+
+        return redirect()->route('admin.contracts.edit', [
+            'contract' => $contract->id
+        ])->with(['message' => 'Contrato editado com sucesso!']);
     }
 
     /**

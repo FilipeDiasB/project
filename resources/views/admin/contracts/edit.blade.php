@@ -5,7 +5,7 @@
     <section class="dash_content_app">
 
         <header class="dash_content_app_header">
-            <h2 class="icon-search">Cadastrar Novo Contrato</h2>
+            <h2 class="icon-search">Editar Contrato</h2>
 
             <div class="dash_content_app_header_actions">
                 <nav class="dash_content_app_breadcrumb">
@@ -37,33 +37,45 @@
                     </li>
                 </ul>
 
+                @if($errors->all())
+                    @foreach($errors->all() as $error)
+                        @component('admin.components.color-message', ['color' => 'orange'])
+                            <p class="icon-asterisk">{{ $error }}</p>
+                        @endcomponent
+                    @endforeach
+                @endif
+
+                @if(session()->exists('message'))
+                    @component('admin.components.color-message', ['color' => 'green'])
+                        <p class="icon-asterisk">{{ session()->get('message') }}</p>
+                    @endcomponent
+                @endif
+
                 <div class="nav_tabs_content">
                     <div id="parts">
                         <form action="{{ route('admin.contracts.update', ['contract' => $contract->id]) }}" method="post" class="app_form">
                             @csrf
                             @method('PUT')
 
-
-
                             <div class="label_gc">
                                 <span class="legend">Finalidade:</span>
                                 <label class="label">
-                                    <input type="checkbox" name="sale" {{ old('sale') == 'on' ? 'checked' : '' }}><span>Venda</span>
+                                    <input type="checkbox" name="sale" {{ old('sale') == 'on' ? 'checked' : ($contract->sale == 'on' ? 'checked' : '') }}><span>Venda</span>
                                 </label>
 
                                 <label class="label">
-                                    <input type="checkbox" name="rent" {{ old('rent') == 'on' ? 'checked' : '' }}><span>Locação</span>
+                                    <input type="checkbox" name="rent" {{ old('rent') == 'on' ? 'checked' : ($contract->rent == 'on' ? 'checked' : '') }}><span>Locação</span>
                                 </label>
                             </div>
 
                             <label class="label">
                                 <span class="legend">Status do Contrato:</span>
                                 <select name="status" class="select2">
-                                    <option value="pending" {{ old('status' === 'pending' ? 'select' : '') }}>Pendente
+                                    <option value="pending" {{ old('status') === 'pending' ? 'selected' : ($contract->status === 'pending' ? 'selected' : '') }}>Pendente
                                     </option>
-                                    <option value="active" {{ old('status' === 'active' ? 'select' : '') }}>Ativo
+                                    <option value="active" {{ old('status') === 'active' ? 'selected' : ($contract->status === 'active' ? 'selected' : '') }}>Ativo
                                     </option>
-                                    <option value="canceled" {{ old('status' === 'canceled' ? 'select' : '') }}>Cancelado
+                                    <option value="canceled" {{ old('status') === 'canceled' ? 'selected' : ($contract->status === 'canceled' ? 'selected' : '') }}>Cancelado
                                     </option>
                                 </select>
                             </label>
@@ -82,7 +94,7 @@
                                                     data-action="{{ route('admin.contracts.getDataOwner') }}">
                                                 <option value="0">Informe um Cliente</option>
                                                 @foreach($lessors->get() as $lessor)
-                                                    <option value="{{ $lessor->id }}">{{ $lessor->name }}
+                                                    <option value="{{ $lessor->id }}" {{ (old('owner_id') == $lessor->id ? 'selected' :  ($contract->owner_id == $lessor->id ? 'selected' : '')) }}>{{ $lessor->name }}
                                                         ({{ $lessor->document }})
                                                     </option>
 
@@ -121,7 +133,7 @@
                                                     data-action="{{ route('admin.contracts.getDataOwner') }}">
                                                 <option value="0">Informe um Cliente</option>
                                                 @foreach($lessees->get() as $lessee)
-                                                    <option value="{{ $lessee->id }}">{{ $lessee->name }}
+                                                    <option value="{{ $lessee->id }}" {{ (old('acquirer_id') == $lessee->id ? 'selected' : ($contract->acquirer_id == $lessee->id ? 'selected' : '')) }}>{{ $lessee->name }}
                                                         ({{ $lessee->document }})
                                                     </option>
                                                 @endforeach
@@ -165,14 +177,16 @@
                                             <span class="legend">Valor de Venda:</span>
                                             <input type="tel" name="sale_price" class="mask-money"
                                                    placeholder="Valor de Venda"
-                                                   disabled {{ (old('sale') != 'on' ? 'disable' : '') }}/>
+                                                   disabled {{ ($contract->sale == true ? $contract->price : '0,00') }}"
+                                            {{ ($contract->sale != true ? 'disabled' : '') }}/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Valor de Locação:</span>
                                             <input type="text" name="rent_price" class="mask-money"
                                                    placeholder="Valor de Locação"
-                                                   disabled {{ (old('sale') != 'on' ? 'disable' : '') }}/>
+                                                   disabled {{ ($contract->rent == true ? $contract->price : '0,00') }}"
+                                            {{ ($contract->rent != true ? 'disabled' : '') }}/>
                                         </label>
                                     </div>
 
@@ -180,13 +194,13 @@
                                         <label class="label">
                                             <span class="legend">IPTU:</span>
                                             <input type="text" name="tribute" class="mask-money" placeholder="IPTU"
-                                                   value=""/>
+                                                   value="{{ old('tribute') ?? $contract->tribute }}"/>
                                         </label>
 
                                         <label class="label">
                                             <span class="legend">Condomínio:</span>
                                             <input type="text" name="condominium" class="mask-money"
-                                                   placeholder="Valor do Condomínio" value=""/>
+                                                   placeholder="Valor do Condomínio" value="{{ old('condominium') ?? $contract->condominium }}"/>
                                         </label>
                                     </div>
 
@@ -195,7 +209,7 @@
                                             <span class="legend">Dia de Vencimento:</span>
                                             <select name="due_date" class="select2">
                                                 @for($i = 1; $i <= 28; $i++)
-                                                    <option value="{{ $i }}">{{ $i }}º/mês</option>
+                                                    <option value="{{ $i }}" {{old('due_date') == $i ? 'selected' : ($contract->due_date == $i ? 'selected' : '')}}>{{ $i }}º/mês</option>
                                                 @endfor
                                             </select>
                                         </label>
@@ -203,10 +217,10 @@
                                         <label class="label">
                                             <span class="legend">Prazo do Contrato (Em meses)</span>
                                             <select name="deadline" class="select2">
-                                                <option value="12">12 meses</option>
-                                                <option value="24">24 meses</option>
-                                                <option value="36">36 meses</option>
-                                                <option value="48">48 meses</option>
+                                                <option value="12" {{old('deadline') == 12 ? 'selected' : ($contract->deadline == 12 ? 'selected' : '')}}>12 meses</option>
+                                                <option value="24" {{old('deadline') == 24 ? 'selected' : ($contract->deadline == 24 ? 'selected' : '')}}>24 meses</option>
+                                                <option value="36" {{old('deadline') == 36 ? 'selected' : ($contract->deadline == 36 ? 'selected' : '')}}>36 meses</option>
+                                                <option value="48" {{old('deadline') == 48 ? 'selected' : ($contract->deadline == 48 ? 'selected' : '')}}>48 meses</option>
                                             </select>
                                         </label>
                                     </div>
@@ -214,7 +228,7 @@
                                     <label class="label">
                                         <span class="legend">Data de Início:</span>
                                         <input type="tel" name="start_at" class="mask-date" placeholder="Data de Início"
-                                               value="{{ date('Y/m/d') }}"/>
+                                               value="{{ old('start_at') ?? $contract->start_at }}"/>
                                     </label>
                                 </div>
                             </div>

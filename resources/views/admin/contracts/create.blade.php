@@ -77,11 +77,11 @@
                             <label class="label">
                                 <span class="legend">Status do Contrato:</span>
                                 <select name="status" class="select2">
-                                    <option value="pending" {{ old('status' === 'pending' ? 'select' : '') }}>Pendente
+                                    <option value="pending" {{ old('status' === 'pending' ? 'selected' : '') }}>Pendente
                                     </option>
-                                    <option value="active" {{ old('status' === 'active' ? 'select' : '') }}>Ativo
+                                    <option value="active" {{ old('status' === 'active' ? 'selected' : '') }}>Ativo
                                     </option>
-                                    <option value="canceled" {{ old('status' === 'canceled' ? 'select' : '') }}>
+                                    <option value="canceled" {{ old('status' === 'canceled' ? 'selected' : '') }}>
                                         Cancelado
                                     </option>
                                 </select>

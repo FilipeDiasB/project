@@ -32,7 +32,7 @@ class Contract extends Model
 
     public function ownerIdObject()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function ownerCompanyIdObject()
@@ -47,7 +47,7 @@ class Contract extends Model
 
     public function acquirerIdObject()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'acquirer_id');
     }
 
     public function acquirerCompanyIdObject()

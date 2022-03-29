@@ -226,6 +226,11 @@ return [
         'acquirer' => 'adquirente',
         'property' => 'imóvel',
         'start_at' => 'data de início',
+        'rent' => 'Locação',
+        'sale' => 'Venda',
+        'sale_price' => 'Valor da venda',
+        'rent_price' => 'Valor do aluguel',
+
 
         // PROPERTY
         'user' => 'usuário',
